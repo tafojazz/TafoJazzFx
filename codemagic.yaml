@@ -8,7 +8,7 @@ workflows:
       - name: Instalar XcodeGen
         script: |
           brew install xcodegen || true
-      - name: Generar proyecto Xcode
+      - name: Generar archivo Xcode
         script: |
           xcodegen generate
       - name: Compilar con xcodebuild
