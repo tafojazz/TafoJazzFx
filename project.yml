@@ -1,0 +1,30 @@
+name: TafoJazzFX
+options:
+  bundleIdPrefix: com.tafo
+configs:
+  Debug: debug
+  Release: release
+settings:
+  SWIFT_VERSION: 5.0
+targets:
+  TafoJazzFX:
+    type: application
+    platform: iOS
+    deploymentTarget: "15.0"
+    sources:
+      - path: .
+        excludes: ["*.xcodeproj", "project.yml", "*.zip"]
+    settings:
+      INFO_PLIST_FILE: Info.plist
+    resources:
+      - TafoLogo.jpeg
+    dependencies:
+      - package: https://github.com/AudioKit/AudioKit.git
+      - package: https://github.com/AudioKit/SoundpipeAudioKit.git
+packages:
+  AudioKit:
+    url: https://github.com/AudioKit/AudioKit.git
+    from: "5.0.0"
+  SoundpipeAudioKit:
+    url: https://github.com/AudioKit/SoundpipeAudioKit.git
+    from: "5.0.0"
