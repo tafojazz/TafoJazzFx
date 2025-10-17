@@ -1,0 +1,27 @@
+workflows:
+  build_ios_native:
+    name: Compilación iOS nativa (XcodeGen)
+    max_build_duration: 60
+    environment:
+      xcode: latest
+    scripts:
+      - name: Instalar XcodeGen
+        script: |
+          brew install xcodegen || true
+      - name: Generar proyecto Xcode
+        script: |
+          xcodegen generate
+      - name: Compilar con xcodebuild
+        script: |
+          xcodebuild \
+            -project TafoJazzFx.xcodeproj \
+            -scheme TafoJazzFx \
+            -sdk iphoneos \
+            -configuration Release \
+            clean build CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO
+    artifacts:
+      - build/Release-iphoneos/*.app
+    publishing:
+      email:
+        recipients:
+          - tafoya087@gmail.com
