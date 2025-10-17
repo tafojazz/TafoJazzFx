@@ -13,7 +13,7 @@ targets:
     platform: iOS
     deploymentTarget: "15.0"
     sources:
-      - TafoJazzFX
+      - .
     dependencies:
       - package: AudioKit
         product: AudioKit
