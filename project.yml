@@ -21,3 +21,9 @@ targets:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.tafoya.TafoJazzFx
         SWIFT_VERSION: 5.0
+
+schemes:
+  TafoJazzFx:
+    build:
+      targets:
+        TafoJazzFX: all
