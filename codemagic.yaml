@@ -24,7 +24,7 @@ workflows:
     publishing:
       email:
         recipients:
-          - tu@correo.com
+          - tafoya087@gmail.com
         notify_on_build_start: false
         notify:
           on_success: true
