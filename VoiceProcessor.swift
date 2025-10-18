@@ -5,8 +5,23 @@ import SoundpipeAudioKit
 class VoiceProcessor: ObservableObject {
     private let engine = AudioEngine()
     private var mic: AudioEngine.InputNode?
-    private var booster: Fader?
-    private var mixer: Mixer?
+
+    private var pitchShifter: PitchShifter!
+    private var reverb: CostelloReverb!
+    private var delay: Delay!
+    private var mixer: Mixer!
+
+    @Published var pitch: AUValue = 0.0 {
+        didSet { pitchShifter.shift = pitch }
+    }
+
+    @Published var reverbAmount: AUValue = 0.5 {
+        didSet { reverb.feedback = reverbAmount }
+    }
+
+    @Published var delayTime: AUValue = 0.2 {
+        didSet { delay.time = delayTime }
+    }
 
     init() {
         Settings.audioInputEnabled = true
@@ -17,8 +32,16 @@ class VoiceProcessor: ObservableObject {
         }
 
         mic = input
-        booster = Fader(mic!, gain: 1.0)
-        mixer = Mixer(booster!)
+
+        pitchShifter = PitchShifter(mic!)
+        reverb = CostelloReverb(pitchShifter)
+        delay = Delay(reverb)
+
+        pitchShifter.shift = pitch
+        reverb.feedback = reverbAmount
+        delay.time = delayTime
+
+        mixer = Mixer(delay)
         engine.output = mixer
     }
 
@@ -35,10 +58,6 @@ class VoiceProcessor: ObservableObject {
         engine.stop()
         print("🛑 Motor de audio detenido")
     }
-
-    func setGain(_ value: AUValue) {
-        booster?.gain = value
-        print("🎚️ Ganancia ajustada a \(value)")
-    }
 }
+
 
